@@ -1,0 +1,24 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run: sudo pip install pipenv
+      - run: pipenv install
+      - run: pipenv run python3 a2/word2vec.py
+      - run: pipenv run python3 a2/sgd.py
+      - run: pipenv run python3 a3/parser_transitions.py part_c
+      - run: pipenv run python3 a3/parser_transitions.py part_d
+      - run: cd a4
+      - run: pipenv run python3 sanity_check.py 1d
+      - run: pipenv run python3 sanity_check.py 1e
+      - run: pipenv run python3 sanity_check.py 1f
+      - run: cd ..
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
