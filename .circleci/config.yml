@@ -12,9 +12,11 @@ jobs:
       - run: pipenv run python3 a2/sgd.py
       - run: pipenv run python3 a3/parser_transitions.py part_c
       - run: pipenv run python3 a3/parser_transitions.py part_d
-      - run: pipenv run python3 a4/python sanity_check.py 1d
-      - run: pipenv run python3 a4/python sanity_check.py 1e
-      - run: pipenv run python3 a4/python sanity_check.py 1f
+      - run: cd a4
+      - run: pipenv run python3 sanity_check.py 1d
+      - run: pipenv run python3 sanity_check.py 1e
+      - run: pipenv run python3 sanity_check.py 1f
+      - run: cd ..
 
 workflows:
   main:
