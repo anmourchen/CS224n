@@ -8,14 +8,13 @@ jobs:
       - checkout
       - run: sudo pip install pipenv
       - run: pipenv install
-      - run: pipenv shell
-      - run: python a2/word2vec.py
-      - run: python a2/sgd.py
-      - run: python a3/parser_transitions.py part_c
-      - run: python a3/parser_transitions.py part_d
-      - run: python a4/python sanity_check.py 1d
-      - run: python a4/python sanity_check.py 1e
-      - run: python a4/python sanity_check.py 1f
+      - run: pipenv run python3 a2/word2vec.py
+      - run: pipenv run python3 a2/sgd.py
+      - run: pipenv run python3 a3/parser_transitions.py part_c
+      - run: pipenv run python3 a3/parser_transitions.py part_d
+      - run: pipenv run python3 a4/python sanity_check.py 1d
+      - run: pipenv run python3 a4/python sanity_check.py 1e
+      - run: pipenv run python3 a4/python sanity_check.py 1f
 
 workflows:
   main:
