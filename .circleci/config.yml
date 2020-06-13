@@ -1,0 +1,15 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run: sudo pip install pipenv
+      - run: pipenv install
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
