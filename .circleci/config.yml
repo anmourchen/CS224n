@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run: sudo pip install pipenv
       - run: pipenv install
+      - run: pipenv shell
       - run: python a2/word2vec.py
       - run: python a2/sgd.py
       - run: python a3/parser_transitions.py part_c
