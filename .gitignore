@@ -1,4 +1,6 @@
 */.ipynb_checkpoints/*
 .DS_Store
 .vscode
+a2/*.npy
+a2/*pickle
 
