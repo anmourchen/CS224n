@@ -95,6 +95,12 @@ class VocabEntry(object):
         """
         return 'Vocabulary[size=%d]' % len(self)
 
+    def char_count(self):
+        """ Returns the number of characters in VocabEntry
+        @returns len (int): number of characters in VocabEntry
+        """
+        return len(self.char2id)
+
     def id2word(self, wid):
         """ Return mapping of index to word.
         @param wid (int): word index
@@ -128,7 +134,14 @@ class VocabEntry(object):
         ###     You must prepend each word with the `start_of_word` character and append 
         ###     with the `end_of_word` character. 
 
-
+        word_ids = []
+        for s in sents:
+            sent_ids = []
+            for w in s:
+                w_ids = [self.start_of_word] + [self.char2id[c] for c in w] + [self.end_of_word]
+                sent_ids.append(w_ids)
+            word_ids.append(sent_ids)
+        return word_ids
         ### END YOUR CODE
 
     def words2indices(self, sents):
@@ -159,7 +172,10 @@ class VocabEntry(object):
         ###     Connect `words2charindices()` and `pad_sents_char()` which you've defined in 
         ###     previous parts
         
-
+        char_ids = self.words2charindices(sents)
+        sents_t = pad_sents_char(char_ids, self.char2id['<pad>'])
+        sents_var = torch.tensor(sents_t, dtype=torch.long, device=device)
+        return sents_var.permute([1, 0, 2])
         ### END YOUR CODE
 
     def to_input_tensor(self, sents: List[List[str]], device: torch.device) -> torch.Tensor:

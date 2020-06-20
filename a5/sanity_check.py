@@ -7,6 +7,8 @@ sanity_check.py: sanity checks for assignment 5
 Usage:
     sanity_check.py 1e
     sanity_check.py 1f
+    sanity_check.py 1h
+    sanity_check.py 1i
     sanity_check.py 1j
     sanity_check.py 2a
     sanity_check.py 2b
@@ -28,6 +30,8 @@ from utils import pad_sents_char, read_corpus, batch_iter
 from vocab import Vocab, VocabEntry
 
 from char_decoder import CharDecoder
+from cnn import CNN
+from highway import Highway
 from nmt_model import NMT
 
 
@@ -95,6 +99,41 @@ def question_1f_sanity_check():
     print("Sanity Check Passed for Question 1f: Padding!")
     print("-"*80)
 
+def question_1h_sanity_check():
+    """ Sanity check for highway.py
+        basic shape check
+    """
+    print ("-"*80)
+    print("Running Sanity Check for Question 1h: Highway Networks")
+    print ("-"*80)
+
+    x_conv_out = torch.rand(BATCH_SIZE, EMBED_SIZE)
+    highway = Highway(EMBED_SIZE)
+    x_highway = highway(x_conv_out)
+    assert x_highway.shape == x_conv_out.shape, f"output size is not correct, expects {x_conv_out.shape}, but got {x_highway.shape}\n"
+
+    print("Sanity Check Passed for Question 1h: Highway!")
+    print("-"*80)
+
+def question_1i_sanity_check():
+    """ Sanity check for cnn.py
+        basic shape check
+    """
+    print ("-"*80)
+    print("Running Sanity Check for Question 1i: CNN")
+    print ("-"*80)
+
+    E_CHAR = 5
+    E_WORD = 10
+    M_WORD = 10
+
+    cnn = CNN(input_channels=E_CHAR, output_channels=E_WORD)
+    x_reshaped = torch.rand(BATCH_SIZE, E_CHAR, M_WORD)
+    x_conv_out = cnn(x_reshaped)
+    assert x_conv_out.shape[1] == E_WORD, f"output tensor size is not correct, expects {E_WORD}, but got x_conv_out.shape[1]\n"
+
+    print("Sanity Check Passed for Question 1i: CNN!")
+    print("-"*80)
 
 def question_1j_sanity_check(model):
 	""" Sanity check for model_embeddings.py 
@@ -213,6 +252,10 @@ def main():
         question_1e_sanity_check()
     elif args['1f']:
         question_1f_sanity_check()
+    elif args['1h']:
+        question_1h_sanity_check()
+    elif args['1i']:
+        question_1i_sanity_check()
     elif args['1j']:
         question_1j_sanity_check(model)
     elif args['2a']:
